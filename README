@@ -35,7 +35,13 @@ if ApplicationConfig.mail_host == nil
 
 Because of the way it's working.
 
-Finally for testing you can before any test:
+For testing, first:
+
+require 'application_config_test_ext'
+
+in your test_helper
+
+And then before any test you want to alter the config for:
 
 ApplicationConfig.add(
 <<EOF
