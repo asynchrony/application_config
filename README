@@ -1,0 +1,50 @@
+ApplicationConfig
+=================
+
+Basically there are 2 levels of configuration:
+
+1) application wide which is configured in config/application.yml
+2) environment specific which is configured in config/environments/application-#{RAILS_ENV}.yml
+
+The environment specific configs override the applicaiton wide config
+
+
+Example
+=======
+
+script/install plugin git://github.com/asynchrony/application_config.git
+
+Then if for example in your config/application.yml you had:
+
+mail_host: example.com
+
+And in your config/environments/application-production.yml you had:
+
+mail_host: production.server.com
+
+you could in your code do:
+
+ApplicationConfig['mail_host'].to_s or
+ApplicationConfig.mail_host.to_s
+
+At the moment you really need the to_s on the end.
+
+Also, if you want to do a nil check you need to put the applicaiton config on the LHS:
+
+if ApplicationConfig.mail_host == nil
+
+Because of the way it's working.
+
+Finally for testing you can before any test:
+
+ApplicationConfig.add(
+<<EOF
+mail_host: test_mail_host
+EOF
+)
+
+Which will change the config for that test and then rollback to what it was before the test. 
+This allows you to test behavior off of the singleton config object.
+
+
+Copyright (c) 2009 [name of plugin creator], released under the MIT license
