@@ -10,13 +10,3 @@ begin
   end
   ApplicationConfig.singleton(config)
 end
-
-if RAILS_ENV == "test"
-  class ActiveSupport::TestCase
-    teardown :reset_application_config
-  
-    def reset_application_config
-      ApplicationConfig.reset_config_after_test
-    end
-  end
-end
