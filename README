@@ -24,14 +24,14 @@ mail_host: production.server.com
 
 you could in your code do:
 
-ApplicationConfig['mail_host'].to_s or
-ApplicationConfig.mail_host.to_s
+ApplicationConfig::Base['mail_host'].to_s or
+ApplicationConfig::Base.mail_host.to_s
 
 At the moment you really need the to_s on the end.
 
 Also, if you want to do a nil check you need to put the applicaiton config on the LHS:
 
-if ApplicationConfig.mail_host == nil
+if ApplicationConfig::Base.mail_host == nil
 
 Because of the way it's working.
 
@@ -43,7 +43,7 @@ in your test_helper
 
 And then before any test you want to alter the config for:
 
-ApplicationConfig.add(
+ApplicationConfig::Base.add(
 <<EOF
 mail_host: test_mail_host
 EOF

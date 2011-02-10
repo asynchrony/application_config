@@ -1,18 +1,22 @@
-class ApplicationConfig::DataStructures::NestedHash < Hash
+module ApplicationConfig
   
-  def initialize(hash = {})
-    self.update(hash)
-  end
+  module DataStructures
+    class NestedHash < Hash
   
-  def [](key)
-    value = fetch(key, nil)
-    return ApplicationConfig::DataStructures::AlwaysNullNode.new unless value
-    return ApplicationConfig::DataStructures::ValueNode.new(value) unless value.kind_of?(Hash)
-    return ApplicationConfig::DataStructures::NestedHash.new(value)
-  end
-  
-  def method_missing(method_name)
-    self[method_name.to_s]
-  end
-  
+      def initialize(hash = {})
+        self.update(hash)
+      end
+      
+      def [](key)
+        value = fetch(key, nil)
+        return ApplicationConfig::DataStructures::AlwaysNullNode.new unless value
+        return ApplicationConfig::DataStructures::ValueNode.new(value) unless value.kind_of?(Hash)
+        return ApplicationConfig::DataStructures::NestedHash.new(value)
+      end
+      
+      def method_missing(method_name)
+        self[method_name.to_s]
+      end
+    end
+  end  
 end

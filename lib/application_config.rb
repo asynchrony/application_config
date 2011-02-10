@@ -1,34 +1,8 @@
-class ApplicationConfig
-  @@application_config = nil
+require 'application_config/base'
+require 'application_config/data_structures/always_null_node'
+require 'application_config/data_structures/nested_hash'
+require 'application_config/data_structures/value_node'
 
-  def [](key)
-    return @config[key] if @config
-    nil
-  end
-
-  def add(config_text)
-    if @config
-      @config.merge!(YAML::load(config_text))
-    else
-      @config = ApplicationConfig::DataStructures::NestedHash.new(YAML::load(config_text))
-    end
-  end
-
-  def self.singleton(application_config)
-    @@application_config ||= application_config
-  end
-
-  def self.[](key)
-#    RAILS_DEFAULT_LOGGER.info("Loading #{key}=#{@@application_config[key]}")
-    @@application_config[key]
-  end
-  
-  def method_missing(method_name)
-    self[method_name.to_s]
-  end
-  
-  def self.method_missing(method_name)
-    self[method_name.to_s]
-  end
-
+if defined?(Rails)
+  require 'application_config/railtie'
 end
