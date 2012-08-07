@@ -1,8 +1,7 @@
 require 'test_helper'
 
-class AppConfigTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
+class AppConfigTest < MiniTest::Unit::TestCase
+  def test_truth
     assert true
   end
 end
