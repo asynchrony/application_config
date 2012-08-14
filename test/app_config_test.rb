@@ -12,21 +12,21 @@ class AppConfigTest < MiniTest::Unit::TestCase
     ac = ApplicationConfig::Base.new
     ac.add("""node: value""")
 
-    assert_equal("value", ac.node)
+    assert("value" == ac.node, "expected #{"value"} to == #{ac.node}")
   end
 
   def test_root_value_node_equal_interpreted_string
     ac = ApplicationConfig::Base.new
     ac.add("""node: value""")
 
-    assert_equal("value", "#{ac.node}")
+    assert("value" == "#{ac.node}", "expected #{"value"} to == #{"#{ac.node}"}")
   end
 
   def test_root_value_node_equal_string_concat
     ac = ApplicationConfig::Base.new
     ac.add("""node: value""")
 
-    assert_equal("value", "" + ac.node)
+    assert("value" == "" + ac.node, "expected #{"value"} to == #{"" + ac.node}}")
   end
 
   def test_non_root_value_node_equal_string
@@ -37,7 +37,18 @@ root:
 """
     )
 
-    assert_equal("value", ac.root.node)
+    assert("value" == ac.root.node, "expected #{"value"} to == #{ac.root.node}")
+  end
+
+  def test_non_root_value_node_to_s_equal_to_string
+    ac = ApplicationConfig::Base.new
+    ac.add("""
+root:
+  node: value
+"""
+    )
+
+    assert_equal("value", ac.root.node.to_s)
   end
 
   def test_non_root_value_node_equal_interpreted_string
@@ -48,7 +59,7 @@ root:
 """
     )
 
-    assert_equal("value", "#{ac.root.node}")
+    assert("value" == "#{ac.root.node}", "expected #{"value"} to == #{"#{ac.root.node}"}")
   end
 
   def test_non_root_value_node_equal_string_concat
@@ -59,6 +70,6 @@ root:
 """
     )
 
-    assert_equal("value", "" + ac.root.node)
+    assert("value" == "" + ac.root.node, "expected #{"value"} to == #{"" + ac.root.node}")
   end
 end
