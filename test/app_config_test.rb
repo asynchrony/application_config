@@ -72,4 +72,20 @@ root:
 
     assert("value" == "" + ac.root.node, "expected #{"value"} to == #{"" + ac.root.node}")
   end
+
+  def test_non_root_value_node_case_statement
+    ac = ApplicationConfig::Base.new
+    ac.add("""
+root:
+  node: value
+"""
+    )
+
+    case ac.root.node
+    when String
+      pass("Woot!")
+    else
+      fail("Should have evaluated as string")
+    end
+  end
 end
