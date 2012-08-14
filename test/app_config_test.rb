@@ -8,24 +8,57 @@ class AppConfigTest < MiniTest::Unit::TestCase
     assert_nil(ac.property)
   end
 
-  def test_value_node_is_string
+  def test_root_value_node_equal_string
     ac = ApplicationConfig::Base.new
-    ac.add("""key: value""")
+    ac.add("""node: value""")
 
-    assert_equal("value", ac.key)
+    assert_equal("value", ac.node)
   end
 
-  def test_value_node_equal_intereted_string
+  def test_root_value_node_equal_interpreted_string
     ac = ApplicationConfig::Base.new
-    ac.add("""key: value""")
+    ac.add("""node: value""")
 
-    assert_equal("value", "#{ac.key}")
+    assert_equal("value", "#{ac.node}")
   end
 
-  def test_value_node_equal_string_concat
+  def test_root_value_node_equal_string_concat
     ac = ApplicationConfig::Base.new
-    ac.add("""key: value""")
-    
-    assert_equal("value", "" + ac.key)
+    ac.add("""node: value""")
+
+    assert_equal("value", "" + ac.node)
+  end
+
+  def test_non_root_value_node_equal_string
+    ac = ApplicationConfig::Base.new
+    ac.add("""
+root:
+  node: value
+"""
+    )
+
+    assert_equal("value", ac.root.node)
+  end
+
+  def test_non_root_value_node_equal_interpreted_string
+    ac = ApplicationConfig::Base.new
+    ac.add("""
+root:
+  node: value
+"""
+    )
+
+    assert_equal("value", "#{ac.root.node}")
+  end
+
+  def test_non_root_value_node_equal_string_concat
+    ac = ApplicationConfig::Base.new
+    ac.add("""
+root:
+  node: value
+"""
+    )
+
+    assert_equal("value", "" + ac.root.node)
   end
 end
