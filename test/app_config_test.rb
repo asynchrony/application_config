@@ -106,6 +106,11 @@ root:
     assert_nil(out.monkeys.monkeys)
   end
 
+  def test_numeric_value_node_to_s_returns_correct_string
+    out = ApplicationConfig::DataStructures::NumericValueNode.new(5)
+    assert_equal("5", out.to_s)
+  end
+
   def test_string_value_node_returns_null_node_on_missing_value
     out = ApplicationConfig::DataStructures::StringValueNode.new("hi")
     assert_equal("hi", out)
