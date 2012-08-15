@@ -88,4 +88,28 @@ root:
       fail("Should have evaluated as string")
     end
   end
+
+  def test_non_root_value_node_fixnum_value
+    ac = ApplicationConfig::Base.new
+    ac.add("""
+root:
+  node: 5
+""")
+
+      assert_equal(5, ac.root.node)
+  end
+
+  def test_numeric_value_node_returns_null_node_on_missing_value
+    out = ApplicationConfig::DataStructures::NumericValueNode.new(5)
+    assert_equal(5, out)
+    assert_nil(out.monkeys)
+    assert_nil(out.monkeys.monkeys)
+  end
+
+  def test_string_value_node_returns_null_node_on_missing_value
+    out = ApplicationConfig::DataStructures::StringValueNode.new("hi")
+    assert_equal("hi", out)
+    assert_nil(out.monkeys)
+    assert_nil(out.monkeys.monkeys)
+  end
 end

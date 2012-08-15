@@ -1,7 +1,7 @@
 require 'forwardable'
 module ApplicationConfig
   module DataStructures
-    class ValueNode < String
+    class StringValueNode < String
       
       def [](key)
         ApplicationConfig::DataStructures::AlwaysNullNode.new
