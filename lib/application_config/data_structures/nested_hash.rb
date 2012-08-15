@@ -10,8 +10,16 @@ module ApplicationConfig
       def [](key)
         value = fetch(key, nil)
         return ApplicationConfig::DataStructures::AlwaysNullNode.new unless value
-        return ApplicationConfig::DataStructures::ValueNode.new(value) unless value.kind_of?(Hash)
-        return ApplicationConfig::DataStructures::NestedHash.new(value)
+        return ApplicationConfig::DataStructures::NestedHash.new(value) if value.kind_of?(Hash)
+
+        case value
+        when String
+          return ApplicationConfig::DataStructures::StringValueNode.new(value)
+        when Numeric
+          return ApplicationConfig::DataStructures::NumericValueNode.new(value)
+        else
+          raise "Unmapped value type: #{value.class.name} for #{value}"
+        end
       end
       
       def method_missing(method_name)

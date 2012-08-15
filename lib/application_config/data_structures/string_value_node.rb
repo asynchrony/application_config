@@ -1,13 +1,7 @@
 require 'forwardable'
 module ApplicationConfig
   module DataStructures
-    class ValueNode
-      extend Forwardable
-      def_delegators :@value, :eql?, :==, :to_s, :to_str, :to_i
-      
-      def initialize(value)
-        @value = value
-      end
+    class StringValueNode < String
       
       def [](key)
         ApplicationConfig::DataStructures::AlwaysNullNode.new
