@@ -10,6 +10,10 @@ module ApplicationConfig
       def method_missing(method_name)
         return ApplicationConfig::DataStructures::AlwaysNullNode.new
       end
+
+      def to_s
+        (0 + self).to_s
+      end
     end
   end
 end
